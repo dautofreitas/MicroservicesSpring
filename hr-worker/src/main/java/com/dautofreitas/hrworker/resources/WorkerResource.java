@@ -5,6 +5,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.PathEditor;
 import org.springframework.core.env.Environment;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,6 +31,8 @@ public class WorkerResource {
 	
 	@GetMapping
 	public ResponseEntity<List<Worker>> findAll(){
+		
+		
 		List<Worker> workers = repository.findAll();
 		
 		return ResponseEntity.ok(workers);	
@@ -39,6 +42,15 @@ public class WorkerResource {
 	@GetMapping(value="/{id}")
 	public ResponseEntity<Worker> findAll(@PathVariable Long id){
 		
+		/*
+		 * Test communication timeout  between services
+		try {
+			Thread.sleep(3000L);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		 */	
 		logger.info("PORT= "+ env.getProperty("local.server.port"));
 		
 		Worker worker = repository.findById(id).get();
